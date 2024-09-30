@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Jayanth Chowdary</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- FontAwesome for icons -->
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="bg-black text-white font-sans">
+    <!-- Navbar -->
+    <nav class="flex justify-end p-6">
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="#home" class="hover:text-gray-400">Home</a></li>
+        <li><a href="#work" class="hover:text-gray-400">Work</a></li>
+        <li><a href="#skills" class="hover:text-gray-400">Skills</a></li>
+        <li>
+          <a href="#about-education" class="hover:text-gray-400"
+            >About & Education</a
+          >
+        </li>
+        <li><a href="#contact" class="hover:text-gray-400">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="flex items-center justify-between min-h-screen px-10"
+    >
+      <div>
+        <h1 class="text-5xl font-bold">Jayanth Chowdary</h1>
+        <p class="text-green-400 mt-2">Available for a full-time position</p>
+        <p class="text-lg mt-4">McKinney, TX</p>
+      </div>
+      <div
+        class="rounded-full border-8 border-blue-500 overflow-hidden"
+        style="width: 300px; height: 300px"
+      >
+        <img
+          src="images/profile.jpg"
+          alt="Profile"
+          class="object-cover w-full h-full"
+        />
+      </div>
+      <div>
+        <p id="animated-title" class="text-2xl"></p>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+      <h2 class="text-center">Technical Skills</h2>
+
+      <div class="skills-container">
+        <!-- Column 1 -->
+        <div class="skills-column">
+          <div class="skill-card" data-skill="Programming" data-percent="85">
+            <p>Programming</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Python, Java, HTML, CSS, JavaScript</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Data Visualization"
+            data-percent="75"
+          >
+            <p>Data Visualization</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Tableau, Power BI, D3.js, Matplotlib</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Database Management"
+            data-percent="80"
+          >
+            <p>Database Management</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">PostgreSQL, MySQL, MongoDB</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Statistical Analysis"
+            data-percent="70"
+          >
+            <p>Statistical Analysis</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">R, Python (Stats Libraries)</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Data Cleaning and Preparation"
+            data-percent="65"
+          >
+            <p>Data Cleaning and Preparation</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Pandas, NumPy, OpenRefine</div>
+          </div>
+        </div>
+
+        <!-- Column 2 -->
+        <div class="skills-column">
+          <div
+            class="skill-card"
+            data-skill="Version Control"
+            data-percent="80"
+          >
+            <p>Version Control</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Git, GitHub</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Problem-Solving and Debugging"
+            data-percent="85"
+          >
+            <p>Problem-Solving and Debugging</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Python Debugger, Chrome DevTools</div>
+          </div>
+          <div class="skill-card" data-skill="SDLC" data-percent="80">
+            <p>Software Development Lifecycle (SDLC)</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Agile, Scrum, Waterfall</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Cloud Platforms"
+            data-percent="90"
+          >
+            <p>Cloud Platforms (AWS)</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">AWS, EC2, S3, Lambda</div>
+          </div>
+          <div
+            class="skill-card"
+            data-skill="Adapting New Technologies"
+            data-percent="75"
+          >
+            <p>Adapting New Technologies</p>
+            <div class="progress-meter"><span></span></div>
+            <div class="hover-box">Machine Learning, AI</div>
+          </div>
+        </div>
+
+        <!-- Circular infographic -->
+        <div id="infographic">
+          <canvas id="skillChart" width="150" height="150"></canvas>
+          <p id="skillLabel" class="text-center"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Me & Education Section -->
+    <section id="about-education" class="min-h-screen p-10">
+      <!-- About Me Section -->
+      <div class="about-me mb-12">
+        <h2 class="text-3xl font-semibold mb-4">About Me</h2>
+        <p class="text-lg leading-relaxed">
+          I'm a self-taught web developer and Cloud Security Engineer with
+          experience in designing new features from ideation to production. I
+          have experience implementing wireframes and design flows into
+          high-performance software applications. I am passionate about creating
+          secure and scalable solutions using cloud technologies. Currently, I'm
+          focused on the backend development and security aspects of cloud
+          systems.
+        </p>
+      </div>
+
+      <!-- Education Section -->
+      <div class="education-timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>Master of Science, Computer Science</h3>
+            <p>University of Central Missouri, Warrensburg, MO</p>
+            <p>August 2022 - May 2024 | GPA: 3.4</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>Bachelor of Computer Science</h3>
+            <p>Vignan University, India</p>
+            <p>2018 - 2022 | GPA: 3.5</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-school"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>12th Grade</h3>
+            <p>Narayana Junior College, India</p>
+            <p>2016 - 2018</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen p-10 bg-gray-900 text-center">
+      <h2 class="text-3xl font-semibold mb-6">Contact Me</h2>
+      <form class="contact-form">
+        <input
+          type="text"
+          id="name"
+          placeholder="Your Name"
+          class="form-input"
+          required
+        />
+        <input
+          type="email"
+          id="email"
+          placeholder="Your Email"
+          class="form-input"
+          required
+        />
+        <textarea
+          id="message"
+          placeholder="Your Message"
+          class="form-input"
+          required
+        ></textarea>
+        <button type="submit" class="form-btn">Send Message</button>
+      </form>
+      <p class="mt-4">
+        Email:
+        <a
+          href="mailto:jayanthtrippineni1@gmail.com"
+          class="underline text-blue-400"
+          >jayanthtrippineni1@gmail.com</a
+        >
+      </p>
+      <p>Location: McKinney, TX</p>
+      <p>Phone: +1 (913) 375-8778</p>
+      <p>
+        <a
+          href="https://www.linkedin.com/in/jc-chow/"
+          class="underline text-blue-400"
+          >LinkedIn</a
+        >
+      </p>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
