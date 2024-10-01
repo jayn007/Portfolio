@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio - Jayanth Chowdary</title>
@@ -15,8 +21,16 @@
       src="https://kit.fontawesome.com/a076d05399.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Include a professional handwritten Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="bg-black text-white font-sans">
+    <!-- Parallax Background Layer -->
+    <div class="parallax-layer"></div>
+
     <!-- Navbar -->
     <nav class="flex justify-end p-6">
       <ul class="flex space-x-6 text-lg">
@@ -57,6 +71,11 @@
       </div>
     </section>
 
+    <!-- 3D Skill Globe Section -->
+    <section id="skill-globe-container">
+      <div id="skill-globe"></div>
+    </section>
+
     <!-- Skills Section -->
     <section id="skills" class="skills-section">
       <h2 class="text-center">Technical Skills</h2>
@@ -66,7 +85,6 @@
         <div class="skills-column">
           <div class="skill-card" data-skill="Programming" data-percent="85">
             <p>Programming</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Python, Java, HTML, CSS, JavaScript</div>
           </div>
           <div
@@ -75,7 +93,6 @@
             data-percent="75"
           >
             <p>Data Visualization</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Tableau, Power BI, D3.js, Matplotlib</div>
           </div>
           <div
@@ -84,7 +101,6 @@
             data-percent="80"
           >
             <p>Database Management</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">PostgreSQL, MySQL, MongoDB</div>
           </div>
           <div
@@ -93,7 +109,6 @@
             data-percent="70"
           >
             <p>Statistical Analysis</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">R, Python (Stats Libraries)</div>
           </div>
           <div
@@ -102,7 +117,6 @@
             data-percent="65"
           >
             <p>Data Cleaning and Preparation</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Pandas, NumPy, OpenRefine</div>
           </div>
         </div>
@@ -115,7 +129,6 @@
             data-percent="80"
           >
             <p>Version Control</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Git, GitHub</div>
           </div>
           <div
@@ -124,12 +137,10 @@
             data-percent="85"
           >
             <p>Problem-Solving and Debugging</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Python Debugger, Chrome DevTools</div>
           </div>
           <div class="skill-card" data-skill="SDLC" data-percent="80">
             <p>Software Development Lifecycle (SDLC)</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Agile, Scrum, Waterfall</div>
           </div>
           <div
@@ -138,7 +149,6 @@
             data-percent="90"
           >
             <p>Cloud Platforms (AWS)</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">AWS, EC2, S3, Lambda</div>
           </div>
           <div
@@ -147,7 +157,6 @@
             data-percent="75"
           >
             <p>Adapting New Technologies</p>
-            <div class="progress-meter"><span></span></div>
             <div class="hover-box">Machine Learning, AI</div>
           </div>
         </div>
@@ -156,6 +165,8 @@
         <div id="infographic">
           <canvas id="skillChart" width="150" height="150"></canvas>
           <p id="skillLabel" class="text-center"></p>
+          <ul id="toolList" class="list-none text-center mt-4"></ul>
+          <!-- Dynamic tool list -->
         </div>
       </div>
     </section>
@@ -165,7 +176,7 @@
       <!-- About Me Section -->
       <div class="about-me mb-12">
         <h2 class="text-3xl font-semibold mb-4">About Me</h2>
-        <p class="text-lg leading-relaxed">
+        <p class="text-lg leading-relaxed handwriting-font">
           I'm a self-taught web developer and Cloud Security Engineer with
           experience in designing new features from ideation to production. I
           have experience implementing wireframes and design flows into
@@ -215,47 +226,87 @@
 
     <!-- Contact Section -->
     <section id="contact" class="min-h-screen p-10 bg-gray-900 text-center">
-      <h2 class="text-3xl font-semibold mb-6">Contact Me</h2>
-      <form class="contact-form">
-        <input
-          type="text"
-          id="name"
-          placeholder="Your Name"
-          class="form-input"
-          required
-        />
-        <input
-          type="email"
-          id="email"
-          placeholder="Your Email"
-          class="form-input"
-          required
-        />
-        <textarea
-          id="message"
-          placeholder="Your Message"
-          class="form-input"
-          required
-        ></textarea>
-        <button type="submit" class="form-btn">Send Message</button>
-      </form>
-      <p class="mt-4">
-        Email:
-        <a
-          href="mailto:jayanthtrippineni1@gmail.com"
-          class="underline text-blue-400"
-          >jayanthtrippineni1@gmail.com</a
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <!-- Left side - Let's Connect Message with background -->
+        <div
+          class="w-full md:w-1/2 mb-10 md:mb-0 flex items-center justify-center relative"
         >
-      </p>
-      <p>Location: McKinney, TX</p>
-      <p>Phone: +1 (913) 375-8778</p>
-      <p>
-        <a
-          href="https://www.linkedin.com/in/jc-chow/"
-          class="underline text-blue-400"
-          >LinkedIn</a
-        >
-      </p>
+          <div class="bg-connect p-6 rounded-lg shadow-lg">
+            <h2 class="text-5xl stylish-font text-white text-left relative">
+              Let's Connect
+            </h2>
+            <p class="text-lg mt-4 text-left leading-relaxed text-white">
+              I’m always excited to connect with like-minded professionals. If
+              you'd like to work together or just have a chat, feel free to
+              reach out to me. You can also schedule a Google Meet with me using
+              the form!
+            </p>
+          </div>
+        </div>
+
+        <!-- Right side - Contact Form -->
+        <div class="w-full md:w-1/2 bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h2 class="text-3xl font-semibold mb-6">Contact Me</h2>
+          <form class="contact-form">
+            <input
+              type="text"
+              id="name"
+              placeholder="Your Name"
+              class="form-input"
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              placeholder="Your Email"
+              class="form-input"
+              required
+            />
+            <textarea
+              id="message"
+              placeholder="Your Message"
+              class="form-input"
+              required
+            ></textarea>
+
+            <!-- Google Meet Scheduling Section (Optional) -->
+            <div class="mt-4">
+              <label for="meeting" class="block text-left text-white"
+                >Schedule a Meeting (Optional)</label
+              >
+              <select id="meeting" class="form-input">
+                <option value="">Select a Time</option>
+                <option value="option1">Tomorrow, 10:00 AM</option>
+                <option value="option2">Tomorrow, 2:00 PM</option>
+                <option value="option3">Friday, 1:00 PM</option>
+              </select>
+            </div>
+
+            <button type="submit" class="form-btn mt-4">Send Message</button>
+          </form>
+
+          <!-- Contact Details Below Form -->
+          <div class="mt-6 text-white">
+            <p class="mt-4">
+              Email:
+              <a
+                href="mailto:jayanthtrippineni1@gmail.com"
+                class="underline text-blue-400"
+                >jayanthtrippineni1@gmail.com</a
+              >
+            </p>
+            <p>Location: McKinney, TX</p>
+            <p>Phone: +1 (913) 375-8778</p>
+            <p>
+              <a
+                href="https://www.linkedin.com/in/jc-chow/"
+                class="underline text-blue-400"
+                >LinkedIn</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <script src="script.js"></script>
