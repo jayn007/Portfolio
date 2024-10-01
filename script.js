@@ -1,65 +1,37 @@
-// Skill Meter Animation on Scroll
-document.addEventListener("DOMContentLoaded", () => {
-  const meters = document.querySelectorAll(".progress-meter span");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const meter = entry.target;
-          const width = meter.dataset.width; // Read the width from a data attribute
-          meter.style.transition = "width 2s ease";
-          meter.style.width = width; // Animate to the actual skill level
-          observer.unobserve(meter); // Stop observing once the animation is triggered
-        }
-      });
-    },
-    {
-      threshold: 0.5, // Trigger when 50% of the element is visible
-    }
-  );
-
-  meters.forEach((meter) => {
-    meter.dataset.width = meter.style.width; // Store the width in a data attribute
-    meter.style.width = "0%"; // Set initial width to 0%
-    observer.observe(meter); // Start observing the element
-  });
-});
-
 // Timeline Animation on Scroll
 document.addEventListener("DOMContentLoaded", () => {
   const timelineItems = document.querySelectorAll(".timeline-item");
 
   const observer = new IntersectionObserver(
-    (entries) => {
+    (entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.style.opacity = "1";
           entry.target.style.transform = "translateY(0)";
-          observer.unobserve(entry.target); // Stop observing once the animation is triggered
+          observer.unobserve(entry.target); // Stop observing once animation is triggered
         }
       });
     },
-    {
-      threshold: 0.5, // Trigger when 50% of the element is visible
-    }
+    { threshold: 0.5 } // Trigger when 50% of the element is visible
   );
 
-  timelineItems.forEach((item) => {
-    observer.observe(item); // Start observing the timeline item
-  });
+  timelineItems.forEach((item) => observer.observe(item));
 });
 
 // Rotating Titles for Hero Section
 document.addEventListener("DOMContentLoaded", () => {
-  const titles = ["Frontend Developer", "Data Analyst"];
+  const titles = [
+    "Frontend Developer",
+    "Data Analyst",
+    "Cloud Security Engineer",
+  ];
   const titleElement = document.getElementById("animated-title");
   let currentIndex = 0;
 
   function updateTitle() {
     titleElement.textContent = titles[currentIndex];
-    titleElement.classList.add("fade"); // Add the fade animation
-    setTimeout(() => titleElement.classList.remove("fade"), 1000); // Remove it after 1 second
+    titleElement.classList.add("fade");
+    setTimeout(() => titleElement.classList.remove("fade"), 1000);
 
     currentIndex = (currentIndex + 1) % titles.length;
   }
@@ -73,54 +45,120 @@ document.addEventListener("DOMContentLoaded", () => {
   const skillCards = document.querySelectorAll(".skill-card");
 
   skillCards.forEach((card) => {
-    card.addEventListener("mouseenter", () => {
-      card.classList.add("fire-effect"); // Adding fire effect class on hover
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.classList.remove("fire-effect"); // Remove fire effect when hover ends
-    });
+    card.addEventListener("mouseenter", () =>
+      card.classList.add("fire-effect")
+    );
+    card.addEventListener("mouseleave", () =>
+      card.classList.remove("fire-effect")
+    );
   });
 });
 
 // Interactive Infographic for Skills
 document.addEventListener("DOMContentLoaded", () => {
   const skillCards = document.querySelectorAll(".skill-card");
-  const infographic = document.getElementById("infographic"); // Assuming there's a canvas or chart element with id 'infographic'
+  const infographic = document.getElementById("infographic");
   const skillLabel = document.getElementById("skillLabel");
+  const toolList = document.getElementById("toolList");
+
+  const skillTools = {
+    Programming: ["Python", "Java", "JavaScript", "HTML", "CSS"],
+    "Data Visualization": ["Tableau", "Power BI", "D3.js", "Matplotlib"],
+    "Database Management": ["PostgreSQL", "MySQL", "MongoDB"],
+    "Statistical Analysis": ["R", "Python Stats Libraries"],
+    "Data Cleaning and Preparation": ["Pandas", "NumPy", "OpenRefine"],
+    "Version Control": ["Git", "GitHub"],
+    "Problem-Solving and Debugging": ["Python Debugger", "Chrome DevTools"],
+    SDLC: ["Agile", "Scrum", "Waterfall"],
+    "Cloud Platforms": ["AWS", "EC2", "S3", "Lambda"],
+    "Adapting New Technologies": ["Machine Learning", "AI"],
+  };
 
   skillCards.forEach((card) => {
     card.addEventListener("mouseenter", () => {
       const skill = card.getAttribute("data-skill");
-      const proficiency = card.getAttribute("data-percent"); // Assuming proficiency is stored in a data attribute
+      const proficiency = card.getAttribute("data-percent");
 
-      // Update chart or infographic to reflect the skill proficiency (example using Chart.js or similar)
-      updateInfographic(skill, proficiency); // This would be a function to update the chart/graphic
+      // Update chart/infographic and skill label
+      updateInfographic(skill, proficiency);
+      skillLabel.textContent = skill;
 
-      // Update skill label
-      skillLabel.textContent = `${skill}: ${proficiency}%`;
+      // Update tool list
+      const tools = skillTools[skill] || [];
+      toolList.innerHTML = tools.map((tool) => `<li>${tool}</li>`).join("");
 
-      // Add animation or glow effect to the infographic
+      // Add glow effect to infographic
       infographic.classList.add("glow-effect");
     });
 
     card.addEventListener("mouseleave", () => {
-      // Reset the infographic or hide it when hovering out
-      resetInfographic(); // This would be a function to reset the chart
-
-      // Remove glow effect
+      // Reset infographic and remove glow effect
+      resetInfographic();
       infographic.classList.remove("glow-effect");
     });
   });
 });
 
-// Placeholder functions for infographic update/reset
+// Function to update the infographic with skill proficiency
 function updateInfographic(skill, proficiency) {
-  // Logic to update infographic/chart with new proficiency (e.g., using Chart.js)
-  // Assuming you use Chart.js here. You'd update the chart with new data (e.g., skill proficiency).
+  const chartData = {
+    labels: ["Proficiency", "Remaining"],
+    datasets: [
+      {
+        data: [proficiency, 100 - proficiency],
+        backgroundColor: ["#f97316", "#1f2937"],
+      },
+    ],
+  };
+
+  const ctx = document.getElementById("skillChart").getContext("2d");
+
+  // Remove the existing chart instance, if any
+  if (window.currentChart) {
+    window.currentChart.destroy();
+  }
+
+  window.currentChart = new Chart(ctx, {
+    type: "doughnut",
+    data: chartData,
+    options: {
+      maintainAspectRatio: false,
+      cutout: "75%",
+      plugins: {
+        legend: { display: false },
+      },
+    },
+  });
 }
 
+// Function to reset the infographic to its default state
 function resetInfographic() {
-  // Logic to reset infographic/chart to default state
-  // This could reset the chart to a default value or make it empty.
+  const ctx = document.getElementById("skillChart").getContext("2d");
+
+  if (window.currentChart) {
+    window.currentChart.destroy();
+  }
+
+  window.currentChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Empty"],
+      datasets: [
+        {
+          data: [100],
+          backgroundColor: ["#4b5563"],
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      cutout: "75%",
+      plugins: {
+        legend: { display: false },
+      },
+    },
+  });
+
+  skillLabel.textContent = "Hover over a skill";
+  toolList.innerHTML = ""; // Clear tool list
 }
