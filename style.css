@@ -3,12 +3,20 @@ body {
   background-color: #0d0d0d;
   color: white;
 }
-
 /* About Me */
 .about-me {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
+  font-family: "Playfair Display", serif; /* Apply Playfair Display */
+  font-size: 1.25rem;
+  font-weight: 500; /* Medium weight */
+  font-style: italic; /* Italic style */
+  line-height: 1.8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  color: white; /* Make sure the text color contrasts with the background */
 }
 
 /* Skills Section */
@@ -62,56 +70,6 @@ body {
   }
 }
 
-/* Progress Meter */
-.progress-meter {
-  background-color: #4b5563;
-  height: 10px;
-  border-radius: 10px;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-.progress-meter span {
-  display: block;
-  height: 100%;
-  background-color: #f97316;
-  transition: width 2s ease;
-  width: 0%;
-}
-
-/* Hover Box for Technologies */
-.hover-box {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #1f2937;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  visibility: hidden;
-}
-
-.skill-card:hover .hover-box {
-  opacity: 1;
-  visibility: visible;
-  animation: hoverPop 0.5s ease;
-}
-
-@keyframes hoverPop {
-  0% {
-    transform: translate(-50%, 10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
-}
-
 /* Infographic Styling */
 #infographic {
   position: relative;
@@ -124,7 +82,7 @@ body {
 #skillLabel {
   margin-top: 10px;
   font-size: 1.5rem;
-  color: #f97316;
+  color: white;
   font-weight: bold;
 }
 
@@ -132,6 +90,19 @@ body {
 #infographic canvas {
   border-radius: 50%;
   box-shadow: 0 0 30px rgba(255, 69, 0, 0.9), 0 0 40px rgba(255, 140, 0, 0.8);
+}
+
+/* Tool List */
+#toolList {
+  margin-top: 20px;
+  text-align: center;
+  color: white;
+  font-size: 1rem;
+}
+
+#toolList li {
+  list-style-type: none;
+  margin-bottom: 5px;
 }
 
 /* Education Timeline */
@@ -217,7 +188,7 @@ body {
 /* Hero Section Title Animation */
 #animated-title {
   font-size: 2.5rem;
-  color: #32cd32; /* Updated to green color */
+  color: #32cd32;
   text-align: center;
 }
 
@@ -235,17 +206,42 @@ body {
   }
 }
 
+/* Contact Section */
+#contact-form-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  background: #1f2937;
+  border-radius: 10px;
+  margin: 50px auto;
+  max-width: 1200px;
+}
+
+/* "Let's Connect" text styling */
+.lets-connect {
+  font-family: "Pacifico", cursive;
+  font-size: 3rem;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  margin-right: 50px;
+}
+
 /* Contact Form */
 .contact-form {
   max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 .form-input {
-  margin-bottom: 15px;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
   border: 2px solid #2563eb;
   background-color: transparent;
@@ -273,6 +269,24 @@ body {
   transform: scale(1.05);
 }
 
+/* Schedule meeting button */
+.meeting-btn {
+  padding: 10px 15px;
+  background-color: #32cd32;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.meeting-btn:hover {
+  background-color: #2dbe2d;
+  transform: scale(1.05);
+}
+
 /* Mobile Friendly */
 @media (max-width: 768px) {
   .timeline-icon,
@@ -286,5 +300,22 @@ body {
 
   .education-timeline:before {
     left: 5%;
+  }
+
+  /* Responsive layout for skills container */
+  .skills-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Adjust layout for contact form on smaller screens */
+  #contact-form-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lets-connect {
+    margin-bottom: 20px;
+    margin-right: 0;
   }
 }
